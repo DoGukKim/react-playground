@@ -1,29 +1,27 @@
-import React from "react";
-import { FlatObject } from "../utils/types/shared";
+"use client";
 
-type State = {
+import React from "react";
+
+type useCounterReturn = {
   count: number;
-};
-type Action = {
-  setCount: React.Dispatch<React.SetStateAction<State["count"]>>;
-  increment: (step: State["count"]) => void;
-  decrement: (step: State["count"]) => void;
+  setCount: React.Dispatch<React.SetStateAction<number>>;
+  increment: (step?: number) => void;
+  decrement: (step?: number) => void;
   reset: () => void;
 };
-type Return = FlatObject<State & Action>;
 
-const useCounter = (initialValue?: State["count"]): Return => {
-  const [count, setCount] = React.useState<State["count"]>(initialValue ?? 0);
+const useCounter = (initialValue?: number): useCounterReturn => {
+  const [count, setCount] = React.useState(initialValue ?? 0);
 
-  const increment: Action["increment"] = (step = 1) => {
+  const increment = (step = 1) => {
     setCount((x) => x + step);
   };
 
-  const decrement: Action["decrement"] = (step = 1) => {
+  const decrement = (step = 1) => {
     setCount((x) => x - step);
   };
 
-  const reset: Action["reset"] = () => {
+  const reset = () => {
     setCount(initialValue ?? 0);
   };
 
